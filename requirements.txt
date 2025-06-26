@@ -1,0 +1,8 @@
+paramiko==3.3.1
+pywinrm==0.4.3
+python-dotenv==1.0.0
+python-Levenshtein==0.21.1
+asyncio==3.4.3
+pyyaml==6.0.1
+reportlab==4.0.4
+cryptography==41.0.3

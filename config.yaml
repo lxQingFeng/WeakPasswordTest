@@ -1,0 +1,27 @@
+# 连接超时时间(秒)
+timeout: 10
+# 最大重试次数
+max_retries: 2
+# 最大工作线程数
+max_workers: 5
+# 协议配置
+protocols:
+  ssh:
+    port: 22
+    enabled: true
+  rdp:
+    port: 3389
+    enabled: true
+
+# 报告配置
+report:
+  format: html
+  include_details: true
+  output_dir: reports
+concurrency:
+  type: async
+  max_tasks: 10
+security:
+  encrypt_sensitive_data: true
+  log_sensitive_data: false
+  audit_log_enabled: true
