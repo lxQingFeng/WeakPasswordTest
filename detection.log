@@ -1,0 +1,13 @@
+2025-08-06 19:05:31,460 - weak_password_detector - WARNING - 弱口令检测成功 - 协议: ssh, 目标: 192.168.32.141, 用户名: root, 密码: 1
+2025-08-06 19:05:34,744 - weak_password_detector - WARNING - 弱口令检测成功 - 协议: ssh, 目标: 192.168.32.128, 用户名: root, 密码: 1
+2025-08-06 19:05:38,093 - weak_password_detector - ERROR - 检测过程中发生错误: timed out
+2025-08-06 19:05:38,093 - weak_password_detector - ERROR - 检测过程中发生错误: timed out
+2025-08-06 19:05:38,094 - weak_password_detector - ERROR - 检测过程中发生错误: timed out
+2025-08-06 19:05:38,095 - weak_password_detector - ERROR - 检测过程中发生错误: timed out
+2025-08-06 19:05:38,095 - weak_password_detector - ERROR - 检测过程中发生错误: timed out
+2025-08-06 19:05:38,097 - weak_password_detector - ERROR - 检测过程中发生错误: timed out
+2025-08-06 19:05:58,090 - weak_password_detector - ERROR - 检测过程中发生错误: 
+2025-08-06 19:05:58,091 - weak_password_detector - ERROR - 检测过程中发生错误: 
+2025-08-06 19:05:58,091 - weak_password_detector - ERROR - 检测过程中发生错误: 
+2025-08-06 19:05:58,092 - weak_password_detector - ERROR - 检测过程中发生错误: 
+2025-08-06 19:05:58,092 - weak_password_detector - WARNING - 弱口令检测完成，共发现 2 个弱口令

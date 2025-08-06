@@ -1,10 +1,10 @@
 # 弱口令检测工具
 
 ## 项目介绍
-弱口令检测工具是一款用于检测网络服务弱口令的安全工具，支持 SSH、RDP 和 Web 登录页面的弱口令检测。该工具能够批量检测目标主机的弱密码问题，并生成直观的 HTML 格式检测报告。
+弱口令检测工具是一款用于检测网络服务弱口令的安全工具，支持 SSH 协议的弱口令检测。该工具能够批量检测目标主机的弱密码问题，并生成直观的 HTML 格式检测报告。
 
 ## 功能特点
-- **多协议支持**：支持 SSH、RDP 和 Web 登录页面检测。
+- **多协议支持**：支持 SSH 和 Web 登录页面检测。
 - **并发检测**：基于 asyncio 的异步检测机制，多线程并发检测，提高检测效率。
 - **灵活配置**：支持通过配置文件自定义检测参数，如连接超时时间、最大并发工作线程数、日志级别等。
 - **详细报告**：生成 HTML 格式的检测报告，包含检测摘要（总检测数、成功数、失败数）、详细结果列表（目标、协议、用户名、密码状态等）以及可视化统计图表。
@@ -12,7 +12,6 @@
 
 ## 环境要求
 - Python 3.8+ 
-- Windows 系统（RDP 检测功能仅支持 Windows）
 
 ## 安装指南
 ### 安装步骤
@@ -36,9 +35,6 @@ max_workers: 5
 protocols:
   ssh:
     port: 22
-    enabled: true
-  rdp:
-    port: 3389
     enabled: true
   web:
     port: 80
@@ -83,7 +79,7 @@ security:
 ```
 usage: main.py [-h] (-t TARGET_FILE | -T TARGET) (-U USERNAME_FILE | -u USERNAME) -p PASSWORD_FILE [-P PROTOCOLS [PROTOCOLS ...]] [-o REPORT_FILE]
 
-弱口令检测工具 - 支持SSH、RDP和Web登录页面检测
+弱口令检测工具 - 支持SSH协议检测
 
 optional arguments:
   -h, --help            显示帮助信息
@@ -98,7 +94,7 @@ optional arguments:
   -p PASSWORD_FILE, --password_file PASSWORD_FILE
                         密码字典文件路径
   -P PROTOCOLS [PROTOCOLS ...], --protocols PROTOCOLS [PROTOCOLS ...]
-                        要检测的协议，可选值: ssh, rdp
+                        要检测的协议，可选值: ssh
   -o REPORT_FILE, --report-file REPORT_FILE
                         检测报告输出路径
 ```
@@ -111,8 +107,8 @@ python main.py -t targets.txt -u admin -p passwords.txt
 # 检测所有支持的协议，使用单个目标和用户名文件
 python main.py -T 192.168.1.1 -U username.txt -p passwords.txt
 
-# 仅检测 SSH 和 RDP 协议
-python main.py -t targets.txt -u root -p passwords.txt -P ssh rdp
+# 仅检测 SSH 协议
+python main.py -t targets.txt -u root -p passwords.txt -P ssh
 
 # 指定输出报告文件
 python main.py -t targets.txt -u admin -p passwords.txt -o results.html
@@ -132,8 +128,7 @@ WeakPasswordTest/
 ├── config.yaml          # 配置文件
 ├── passwords.txt        # 默认密码字典
 ├── detectors/           # 各协议检测模块
-│   ├── ssh_detector.py  # SSH 检测模块
-│   └── rdp_detector.py  # RDP 检测模块
+│   └── ssh_detector.py  # SSH 检测模块
 └── utils/               # 工具类模块
     ├── config.py        # 配置管理
     ├── logger.py        # 日志管理
@@ -147,7 +142,6 @@ WeakPasswordTest/
 - 请勿用于未授权的网络或系统
 
 ## 注意事项
-- RDP 检测功能仅在 Windows 系统上可用
 - 大量并发连接可能被目标系统视为攻击行为
 - 本工具仅用于授权的安全测试，未经授权使用可能违反法律法规
 - 请勿对未授权系统进行检测

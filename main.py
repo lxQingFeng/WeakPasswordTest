@@ -4,8 +4,6 @@ import logging
 import os
 from dotenv import load_dotenv
 from detectors.ssh_detector import SSHDetector
-# from detectors. import RDPDetector
-from detectors.rdp_detector import RDPDetector
 
 from utils.result_handler import ResultHandler
 from utils.config import Config
@@ -40,7 +38,6 @@ class WeakPasswordDetector:
         self.result_handler = ResultHandler()
         self.detectors = {
             'ssh': SSHDetector,
-            'rdp': RDPDetector,
         }
         self.targets = []  # 初始化目标列表
         self.usernames = []  # 初始化用户名列表
@@ -85,26 +82,14 @@ class WeakPasswordDetector:
             logger.error(f"无效的IP地址格式: {target}")
             return
         # 根据协议类型决定是否传入max_retries参数
-        if protocol == 'ssh':
-            detector = self.detectors[protocol](
-                timeout=self.config.get('timeout', 10),
-                max_retries=self.config.get('max_retries', 3)
-            )
-        else:
-            detector = self.detectors[protocol](
-                target=target,
-                username=username,
-                passwords=password_list,
-                timeout=self.config.get('timeout', 10)
-            )
+        detector = self.detectors[protocol](
+            timeout=self.config.get('timeout', 10),
+            max_retries=self.config.get('max_retries', 3)
+        )
 
         try:
-            if protocol == 'ssh':
-                # 添加任务超时控制，防止长时间无响应
-                result = await asyncio.wait_for(detector.detect(target, port, username, password_list), timeout=30)
-            elif protocol == 'rdp':
-                # 添加超时控制防止长时间无响应
-                result = await asyncio.wait_for(detector.detect(), timeout=30)
+            # 添加任务超时控制，防止长时间无响应
+            result = await asyncio.wait_for(detector.detect(target, port, username, password_list), timeout=30)
 
             if result['success']:
                 logger.warning(
@@ -164,7 +149,7 @@ class WeakPasswordDetector:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='弱口令检测工具 - 支持SSH、RDP和Web登录页面检测')
+        description='弱口令检测工具 - 支持SSH协议检测')
     # 目标参数组（互斥）
     target_group = parser.add_mutually_exclusive_group(required=True)
     target_group.add_argument('-t', '--target-file', help='包含目标列表的文件路径')
@@ -176,7 +161,7 @@ if __name__ == "__main__":
     user_group.add_argument('-u', '--username', help='单个用户名')
     parser.add_argument('-p', '--password_file', required=True,
                         help='密码字典文件路径')
-    parser.add_argument('-P', '--protocols', nargs='+', default=['ssh', 'rdp'], help='要检测的协议，可选值: ssh, rdp')
+    parser.add_argument('-P', '--protocols', nargs='+', default=['ssh'], help='要检测的协议，可选值: ssh')
     parser.add_argument('-o', '--report-file', default='report.html',
                         help='检测报告输出路径')
     args = parser.parse_args()

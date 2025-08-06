@@ -14,7 +14,6 @@ class Config:
             'log_level': 'INFO',
             'protocols': {
                 'ssh': {'port': 22, 'enabled': True},
-                'rdp': {'port': 3389, 'enabled': True},
                 'web': {'port': 80, 'enabled': True}
             }
         }
